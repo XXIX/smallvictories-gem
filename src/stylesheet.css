@@ -1,0 +1,7 @@
+/* Small Victories Sprockets File
+ *
+ * For more details see
+ * https://github.com/rails/sprockets#the-directive-processor
+ *
+ *= require_tree .
+ */

@@ -1,11 +1,12 @@
 #!/usr/bin/env ruby
 
-require './lib/smallvictories'
+require 'smallvictories'
 
 def help
   %Q(
   Usage: sv [COMMAND] [OPTIONS]
   Commands:
+    watch               Watch for changes and compile files
     hello               Puts Hello World!
     help                Prints this help document
     version             Prints the small victories gem version
@@ -20,6 +21,11 @@ def hello
   puts SmallVictories.hello
 end
 
+def watch
+  SmallVictories.setup
+  SmallVictories.watch
+end
+
 case ARGV[0]
 when '-v', '--version', 'version'
   puts SmallVictories::VERSION
@@ -27,6 +33,8 @@ when '-h', '--help', 'help'
   puts help
 when 'hello'
   hello
+when 'watch'
+  watch
 else
   puts "`#{ARGV[0]}` command not found.\n"
   puts help

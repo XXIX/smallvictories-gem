@@ -1,0 +1,4 @@
+source: '/my-source-folder/'
+destination: 'my-site-folder/'
+sass_dir: 'my-sass-folder/'
+stylesheet: 'my-stylesheet.css'
