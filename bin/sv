@@ -7,7 +7,6 @@ def help
   Usage: sv [COMMAND] [OPTIONS]
   Commands:
     watch               Watch for changes and compile files
-    hello               Puts Hello World!
     help                Prints this help document
     version             Prints the small victories gem version
   Options:
@@ -17,13 +16,12 @@ def help
   )
 end
 
-def hello
-  puts SmallVictories.hello
-end
-
 def watch
-  SmallVictories.setup
-  SmallVictories.watch
+  config = SmallVictories::Configuration.new
+  config.setup
+  compiler = SmallVictories::Compiler.new(config: config)
+  watcher = SmallVictories::Watcher.new(compiler: compiler)
+  watcher.watch
 end
 
 case ARGV[0]

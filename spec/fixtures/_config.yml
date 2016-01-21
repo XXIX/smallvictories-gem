@@ -1,4 +1,6 @@
 source: '/my-source-folder/'
 destination: 'my-site-folder/'
-sass_dir: 'my-sass-folder/'
+stylesheets_dir: 'my-sass-folder/'
+javascripts_dir: 'my-js-folder/'
 stylesheet: 'my-stylesheet.css'
+javascript: 'my-javascript.js'
