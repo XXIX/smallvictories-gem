@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+
+require './lib/smallvictories'
+
+def help
+  %Q(
+  Usage: sv [COMMAND] [OPTIONS]
+  Commands:
+    hello               Puts Hello World!
+    help                Prints this help document
+    version             Prints the small victories gem version
+  Options:
+    -h, --help          Prints this help document
+    -v, --version       Prints the siteleaf gem version
+  See https://github.com/xxix/smallvictories-gem for additional documentation.
+  )
+end
+
+def hello
+  puts SmallVictories.hello
+end
+
+case ARGV[0]
+when '-v', '--version', 'version'
+  puts SmallVictories::VERSION
+when '-h', '--help', 'help'
+  puts help
+when 'hello'
+  hello
+else
+  puts "`#{ARGV[0]}` command not found.\n"
+  puts help
+end
