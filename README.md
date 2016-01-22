@@ -42,7 +42,7 @@ This gem allows you to build a site using the tools you're used to and compile a
 version directly into a Small Victories folder.
 
 To do this, create a `_config.yml` file and set the destination to your Small
-Victories site folder e.g. `~/Dropbox/Small Victories/liberal coyote`.
+Victories site folder e.g. `../../Dropbox/Small Victories/liberal coyote`.
 
 Now when you watch or build your site it will output the files into your Dropbox
 folder, which in turn will trigger Small Victories to rebuild your site.
@@ -51,7 +51,7 @@ folder, which in turn will trigger Small Victories to rebuild your site.
 
 ```yaml
 source: ''
-destination: '~/Dropbox/Small Victories/my-site'
+destination: '../Dropbox/Small Victories/my-site'
 stylesheet: '_sv_custom.css'
 javascript: '_sv_custom.js'
 layout: '_layout.liquid'

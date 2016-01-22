@@ -92,10 +92,10 @@ module SmallVictories
           environment.css_compressor = :scss
         end
         sprockets.append_path(config.full_destination_path)
-        assets = sprockets.find_asset(config.stylesheet)
-        assets.write_to "#{config.full_destination_path}#{config.stylesheet}"
-
-        SmallVictories.logger.info "prefixed #{config.destination}/#{config.stylesheet}"
+        if assets = sprockets.find_asset(config.stylesheet)
+          assets.write_to "#{config.full_destination_path}#{config.stylesheet}"
+          SmallVictories.logger.info "prefixed #{config.destination}/#{config.stylesheet}"
+        end
       rescue => e
         SmallVictories.logger.error "#{path}\n#{e}"
       end
