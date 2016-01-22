@@ -21,7 +21,7 @@ module SmallVictories
     end
 
     def full_source_path
-      "#{ROOT}/#{source}"
+      "#{ROOT}/#{source}/"
     end
 
     def destination

@@ -36,14 +36,14 @@ module SmallVictories
     end
 
     def watch
-      listener = build_listener
-      listener.start
       SmallVictories.logger.debug "👋"
       SmallVictories.logger.debug "👀"
+      listener = build_listener
+      listener.start
 
       trap("INT") do
         listener.stop
-        SmallVictories.logger.warn "✋  Halting auto-regeneration."
+        puts "✋  Halting auto-regeneration."
         exit 0
       end
 

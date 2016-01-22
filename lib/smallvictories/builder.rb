@@ -12,6 +12,7 @@ module SmallVictories
     def setup folder=nil
       self.folder = "#{folder.chomp("/").reverse.chomp("/").reverse}/" if folder
       setup_directory folder_path
+      setup_directory folder_source_path
       setup_config
       setup_stylesheet
       setup_javascript
@@ -19,7 +20,11 @@ module SmallVictories
     end
 
     def folder_path
-      "#{config.full_source_path}#{folder}"
+      "#{ROOT}/#{folder}"
+    end
+
+    def folder_source_path
+      "#{folder_path}/#{config.source}/"
     end
 
     private
@@ -56,18 +61,18 @@ module SmallVictories
     end
 
     def setup_stylesheet
-      create_src_file('stylesheet.css', "#{folder_path}#{config.stylesheet}")
+      create_src_file('stylesheet.css', "#{folder_source_path}#{config.stylesheet}")
     end
 
     def setup_javascript
-      create_src_file('javascript.js', "#{folder_path}#{config.javascript}")
+      create_src_file('javascript.js', "#{folder_source_path}#{config.javascript}")
     end
 
     def setup_html
-      setup_directory("#{folder_path}#{config.includes}")
-      create_src_file('layout.liquid', "#{folder_path}#{config.layout}")
-      create_src_file('index.liquid', "#{folder_path}/index.liquid")
-      create_src_file('head.liquid', "#{folder_path}#{config.includes}/_head.liquid")
+      setup_directory("#{folder_source_path}#{config.includes}")
+      create_src_file('head.liquid', "#{folder_source_path}#{config.includes}/_head.liquid")
+      create_src_file('layout.liquid', "#{folder_source_path}#{config.layout}")
+      create_src_file('index.liquid', "#{folder_source_path}index.liquid")
     end
   end
 end

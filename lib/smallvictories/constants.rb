@@ -1,7 +1,7 @@
 module SmallVictories
   CONFIG_FILE = '_config.yml'
-  DEFAULT_SOURCE = ''
-  DEFAULT_DESTINATION = '_site'
+  DEFAULT_SOURCE = 'dev'
+  DEFAULT_DESTINATION = 'prod'
   DEFAULT_STYLESHEET = '_sv_custom.css'
   DEFAULT_JAVASCRIPT = '_sv_custom.js'
   DEFAULT_LAYOUT = '_layout.liquid'

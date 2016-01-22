@@ -5,11 +5,11 @@ describe SmallVictories do
 
   context 'with no config file' do
     it 'defaults to source directory' do
-      expect(configuration.source).to eq ''
+      expect(configuration.source).to eq 'dev'
     end
 
     it 'defaults to destination directory' do
-      expect(configuration.destination).to eq '_site'
+      expect(configuration.destination).to eq 'prod'
     end
 
     it 'defaults stylesheet file' do

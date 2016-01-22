@@ -5,7 +5,7 @@ A command line utility for building websites.
 ## What does it do?
 
 The Small Victories gem compiles Sass/CSS and JS/CoffeeScript files into a single Stylesheet and
-Javascript file and renders HTML and Liquid files into a destination folder.
+JavaScript file and renders HTML and Liquid files into a destination folder.
  
 [Sprockets](https://github.com/rails/sprockets) looks for main Sass/CSS and JS/CoffeeScript files and compiles
 multiple Sass/CSS and JS/CoffeeScript files into a single CSS and JS file.
@@ -23,13 +23,17 @@ be copied over to the destination folder.
 ### Basic Folder Structure
 
 ```text
-project
-├── _includes
-├── _layout.liquid
-├── _sv_custom.css
-├── _sv_custom.js
-│
-└── index.html
+dev
+  ├── _includes
+  │ └── _head.liquid
+  ├── _layout.liquid
+  ├── _sv_custom.css
+  ├── _sv_custom.js
+  └── index.liquid
+prod
+  ├── _sv_custom.css
+  ├── _sv_custom.js
+  └── index.html
 ```
 
 ## How does it work with Small Victories?
@@ -42,6 +46,42 @@ Victories site folder e.g. `~/Dropbox/Small Victories/liberal coyote`.
 
 Now when you watch or build your site it will output the files into your Dropbox
 folder, which in turn will trigger Small Victories to rebuild your site.
+
+### Example Config
+
+```yaml
+source: ''
+destination: '~/Dropbox/Small Victories/my-site'
+stylesheet: '_sv_custom.css'
+javascript: '_sv_custom.js'
+layout: '_layout.liquid'
+includes: '_includes'
+```
+
+### Example Folder Structure
+
+```text
+Code
+  my-site
+    ├── _includes
+    │ └── _head.liquid
+    ├── _config.yml
+    ├── _layout.liquid
+    ├── _sv_custom.css
+    ├── _sv_custom.js
+    └── index.liquid
+
+Dropbox
+  └── Small Victories
+    └──my-site
+      ├── _sv_custom.css
+      ├── _sv_custom.js
+      └── index.html
+```
+
+## Why is there now web server?
+
+There are other static site generators (like [Jekyll](http://jekyllrb.com/) or [Middleman](https://middlemanapp.com/)) that you can use to fire up a web server (and more!), Small Victories helps you build a static site for hosting on Small Victories, so if you don't need anything more than a static HTML file that can be dropped into your Small Victories folder.
 
 ## Installation
 
@@ -63,9 +103,9 @@ run from.
 
 ### Default Configuration
 
-```
-source: ''
-destination: '_site'
+```yaml
+source: 'dev'
+destination: 'prod'
 stylesheet: '_sv_custom.css'
 javascript: '_sv_custom.js'
 layout: '_layout.liquid'

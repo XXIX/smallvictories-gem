@@ -51,6 +51,7 @@ module SmallVictories
           else
             html = liquid.render('config' => { 'stylesheet' => config.stylesheet, 'javascript' => config.javascript })
           end
+          Dir.mkdir(config.full_destination_path) unless File.exists?(config.full_destination_path)
           File.open("#{config.full_destination_path}#{output_file_name}", 'w') { |file| file.write(html) }
           SmallVictories.logger.info "compiled #{config.destination}/#{output_file_name}"
         rescue => e
@@ -58,6 +59,7 @@ module SmallVictories
         end
       end
     end
+
     def package bundles=[config.stylesheet, config.javascript]
       sprockets = Sprockets::Environment.new(ROOT) do |environment|
         environment.js_compressor  = :uglify

@@ -9,6 +9,7 @@ def help
   Commands:
     bootstrap, bootstrap FOLDER     Setup folder with default files
     compile                         Compile files
+    open                            Open index.html in destination folder
     watch                           Watch for changes and compile files
     help                            Prints this help document
     version                         Prints the small victories gem version
@@ -35,6 +36,11 @@ def compile
   compiler.compile_html
 end
 
+def open
+  config = SmallVictories::Configuration.new
+  system("open #{config.full_destination_path}index.html")
+end
+
 def watch
   config = SmallVictories::Configuration.new
   compiler = SmallVictories::Compiler.new(config: config)
@@ -51,6 +57,8 @@ when 'bootstrap'
   bootstrap ARGV[1]
 when 'compile'
   compile
+when 'open'
+  open
 when 'watch'
   watch
 else
