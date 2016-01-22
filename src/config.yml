@@ -1,0 +1,6 @@
+source: ''
+destination: '_site'
+stylesheet: '_sv_custom.css'
+javascript: '_sv_custom.js'
+layout: '_layout.liquid'
+includes: '_includes'

@@ -5,20 +5,38 @@ require 'smallvictories'
 def help
   %Q(
   Usage: sv [COMMAND] [OPTIONS]
+
   Commands:
-    watch               Watch for changes and compile files
-    help                Prints this help document
-    version             Prints the small victories gem version
+    bootstrap, bootstrap FOLDER     Setup folder with default files
+    compile                         Compile files
+    watch                           Watch for changes and compile files
+    help                            Prints this help document
+    version                         Prints the small victories gem version
+
   Options:
-    -h, --help          Prints this help document
-    -v, --version       Prints the siteleaf gem version
+    -h, --help                      Prints this help document
+    -v, --version                   Prints the siteleaf gem version
+
   See https://github.com/xxix/smallvictories-gem for additional documentation.
   )
 end
 
+def bootstrap folder=nil
+  config = SmallVictories::Configuration.new
+  builder = SmallVictories::Builder.new(config: config)
+  builder.setup folder
+end
+
+def compile
+  config = SmallVictories::Configuration.new
+  compiler = SmallVictories::Compiler.new(config: config)
+  compiler.compile_css
+  compiler.compile_js
+  compiler.compile_html
+end
+
 def watch
   config = SmallVictories::Configuration.new
-  config.setup
   compiler = SmallVictories::Compiler.new(config: config)
   watcher = SmallVictories::Watcher.new(compiler: compiler)
   watcher.watch
@@ -29,8 +47,10 @@ when '-v', '--version', 'version'
   puts SmallVictories::VERSION
 when '-h', '--help', 'help'
   puts help
-when 'hello'
-  hello
+when 'bootstrap'
+  bootstrap ARGV[1]
+when 'compile'
+  compile
 when 'watch'
   watch
 else

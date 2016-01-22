@@ -16,18 +16,22 @@ describe SmallVictories do
       expect(configuration.stylesheet).to eq '_sv_custom.css'
     end
 
-    it 'defaults to _stylesheets directory' do
-      expect(configuration.stylesheets_dir).to eq '_stylesheets'
+    it 'defaults javascript file' do
+      expect(configuration.javascript).to eq '_sv_custom.js'
     end
 
-    it 'defaults to _javascripts directory' do
-      expect(configuration.javascripts_dir).to eq '_javascripts'
+    it 'defaults layout file' do
+      expect(configuration.layout).to eq '_layout.liquid'
+    end
+
+    it 'defaults includes folder' do
+      expect(configuration.includes).to eq '_includes'
     end
   end
 
   context 'with config file' do
     before do
-      FileUtils.cp('fixtures/_config.yml', './')
+      FileUtils.cp('fixtures/source/_config.yml', './')
     end
 
     it 'reads the source folder' do
@@ -38,24 +42,20 @@ describe SmallVictories do
       expect(configuration.destination).to eq 'my-site-folder'
     end
 
-    it 'reads the _stylesheets directory' do
-      expect(configuration.stylesheets_dir).to eq 'my-sass-folder'
-    end
-
     it 'reads the output css file' do
       expect(configuration.stylesheet).to eq 'my-stylesheet.css'
-    end
-
-    it 'reads the _javascripts directory' do
-      expect(configuration.javascripts_dir).to eq 'my-js-folder'
     end
 
     it 'reads the output js file' do
       expect(configuration.javascript).to eq 'my-javascript.js'
     end
 
-    after do
-      FileUtils.rm('./_config.yml')
+    it 'reads layout file' do
+      expect(configuration.layout).to eq '_my-template.liquid'
+    end
+
+    it 'reads includes folder' do
+      expect(configuration.includes).to eq 'snippets'
     end
   end
 end

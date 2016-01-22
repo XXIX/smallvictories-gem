@@ -1,3 +1,5 @@
+require 'listen'
+
 module SmallVictories
   class Watcher
     attr_accessor :compiler
@@ -21,8 +23,12 @@ module SmallVictories
         extensions = paths.map{ |path| File.extname(path) }
         extensions.uniq.each do |ext|
           case ext
-          when '.scss', '.sass', '.css', '.coffee', '.js'
-            compiler.package
+          when '.scss', '.sass', '.css'
+            compiler.compile_css
+          when '.coffee', '.js'
+            compiler.compile_js
+          when '.liquid', '.html'
+            compiler.compile_html
           else
           end
         end
@@ -32,12 +38,12 @@ module SmallVictories
     def watch
       listener = build_listener
       listener.start
-      SmallVictories.logger.info "👋"
-      SmallVictories.logger.info "👀"
+      SmallVictories.logger.debug "👋"
+      SmallVictories.logger.debug "👀"
 
       trap("INT") do
         listener.stop
-        SmallVictories.logger.info "✋  Halting auto-regeneration."
+        SmallVictories.logger.warn "✋  Halting auto-regeneration."
         exit 0
       end
 

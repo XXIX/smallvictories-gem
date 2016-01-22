@@ -5,9 +5,6 @@ require "smallvictories/version"
 require "smallvictories/constants"
 require "smallvictories/logger"
 require "smallvictories/configuration"
+require "smallvictories/builder"
 require "smallvictories/compiler"
 require "smallvictories/watcher"
-require 'yaml'
-require 'sassc'
-require 'sprockets'
-require 'listen'

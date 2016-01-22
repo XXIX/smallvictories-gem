@@ -13,3 +13,7 @@
  *
  *= require_tree .
  */
+
+p {
+  font-size: 30px;
+}
