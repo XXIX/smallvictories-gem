@@ -5,8 +5,8 @@ module SmallVictories
     attr_accessor :config
 
     def initialize
-      self.config = if File.exists?('_config.yml')
-        YAML.load(File.read('_config.yml')) || {}
+      self.config = if File.exists?(CONFIG_FILE)
+        YAML.load(File.read(CONFIG_FILE)) || {}
       else
         {}
       end
@@ -21,7 +21,7 @@ module SmallVictories
     end
 
     def full_source_path
-      "#{ROOT}/#{source}/"
+      File.join(ROOT, source)
     end
 
     def destination
@@ -29,7 +29,7 @@ module SmallVictories
     end
 
     def full_destination_path
-      "#{ROOT}/#{destination}/"
+      File.join(ROOT, destination)
     end
 
     def javascript
@@ -44,8 +44,16 @@ module SmallVictories
       config_file(:layout) || DEFAULT_LAYOUT
     end
 
+    def full_layout_path
+      File.join(full_source_path, layout)
+    end
+
     def includes
       config_file(:includes) || DEFAULT_INCLUDES
+    end
+
+    def full_includes_path
+      File.join(full_source_path, includes)
     end
   end
 end

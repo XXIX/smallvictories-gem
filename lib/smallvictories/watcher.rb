@@ -12,7 +12,6 @@ module SmallVictories
       Listen.to(
         compiler.config.full_source_path,
         force_polling: true,
-        ignore: [/#{compiler.config.destination}/],
         &(listen_handler)
       )
     end
@@ -38,10 +37,15 @@ module SmallVictories
     def watch
       SmallVictories.logger.debug "👋"
       SmallVictories.logger.debug "👀"
+
+      pid = Process.fork { system('guard -i --guardfile .sv_guardfile') }
+      Process.detach(pid)
+
       listener = build_listener
       listener.start
 
       trap("INT") do
+        Process.kill "TERM", pid
         listener.stop
         puts "✋  Halting auto-regeneration."
         exit 0

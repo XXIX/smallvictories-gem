@@ -14,6 +14,7 @@ module SmallVictories
       setup_directory folder_path
       setup_directory folder_source_path
       setup_config
+      setup_guardfile
       setup_stylesheet
       setup_javascript
       setup_html
@@ -24,7 +25,7 @@ module SmallVictories
     end
 
     def folder_source_path
-      "#{folder_path}/#{config.source}/"
+      File.join(folder_path, config.source)
     end
 
     private
@@ -50,29 +51,33 @@ module SmallVictories
     end
 
     def setup_config
-      d = YAML::load_file("#{src_directory}config.yml")
+      d = YAML::load_file(File.join(src_directory, 'config.yml'))
       d['source'] = DEFAULT_SOURCE
       d['destination'] = DEFAULT_DESTINATION
       d['stylesheet'] = DEFAULT_STYLESHEET
       d['javascript'] = DEFAULT_JAVASCRIPT
       d['layout'] = DEFAULT_LAYOUT
       d['includes'] = DEFAULT_INCLUDES
-      File.open("#{folder_path}#{CONFIG_FILE}", 'w') {|f| f.write d.to_yaml }
+      File.open(File.join(folder_path, CONFIG_FILE), 'w') {|f| f.write d.to_yaml }
+    end
+
+    def setup_guardfile
+      create_src_file('Guardfile', File.join(folder_path, '.sv_guardfile'))
     end
 
     def setup_stylesheet
-      create_src_file('stylesheet.css', "#{folder_source_path}#{config.stylesheet}")
+      create_src_file('stylesheet.css', File.join(folder_source_path, config.stylesheet))
     end
 
     def setup_javascript
-      create_src_file('javascript.js', "#{folder_source_path}#{config.javascript}")
+      create_src_file('javascript.js', File.join(folder_source_path, config.javascript))
     end
 
     def setup_html
-      setup_directory("#{folder_source_path}#{config.includes}")
-      create_src_file('head.liquid', "#{folder_source_path}#{config.includes}/_head.liquid")
-      create_src_file('layout.liquid', "#{folder_source_path}#{config.layout}")
-      create_src_file('index.liquid', "#{folder_source_path}index.liquid")
+      setup_directory(File.join(folder_source_path, config.includes))
+      create_src_file('head.liquid', File.join(folder_source_path, config.includes, '/_head.liquid'))
+      create_src_file('layout.liquid', File.join(folder_source_path, config.layout))
+      create_src_file('index.liquid', File.join(folder_source_path, 'index.liquid'))
     end
   end
 end

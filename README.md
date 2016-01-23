@@ -18,98 +18,16 @@ renders all HTML and Liquid files through this, including snippets from the
 includes folder.
  
 You don't have to use a layout file if you don't want to, the files will still
-be copied over to the destination folder.
+be copied to the destination folder.
 
-### Basic Folder Structure
-
-```text
-dev
-  ├── _includes
-  │ └── _head.liquid
-  ├── _layout.liquid
-  ├── _sv_custom.css
-  ├── _sv_custom.js
-  └── index.liquid
-prod
-  ├── _sv_custom.css
-  ├── _sv_custom.js
-  └── index.html
-```
-
-## How does it work with Small Victories?
-
-This gem allows you to build a site using the tools you're used to and compile a
-version directly into a Small Victories folder.
-
-To do this, create a `_config.yml` file and set the destination to your Small
-Victories site folder e.g. `../../Dropbox/Small Victories/liberal coyote`.
-
-Now when you watch or build your site it will output the files into your Dropbox
-folder, which in turn will trigger Small Victories to rebuild your site.
-
-### Example Config
-
-```yaml
-source: ''
-destination: '../Dropbox/Small Victories/my-site'
-stylesheet: '_sv_custom.css'
-javascript: '_sv_custom.js'
-layout: '_layout.liquid'
-includes: '_includes'
-```
-
-### Example Folder Structure
-
-```text
-Code
-  my-site
-    ├── _includes
-    │ └── _head.liquid
-    ├── _config.yml
-    ├── _layout.liquid
-    ├── _sv_custom.css
-    ├── _sv_custom.js
-    └── index.liquid
-
-Dropbox
-  └── Small Victories
-    └──my-site
-      ├── _sv_custom.css
-      ├── _sv_custom.js
-      └── index.html
-```
-
-## Why is there now web server?
-
-There are other static site generators (like [Jekyll](http://jekyllrb.com/) or [Middleman](https://middlemanapp.com/)) that you can use to fire up a web server (and more!), Small Victories helps you build a static site for hosting on Small Victories, so if you don't need anything more than a static HTML file that can be dropped into your Small Victories folder.
+[Guard LiveReload](https://github.com/guard/guard-livereload) is used to notify
+the browser to automatically reload. It needs to be used with
+the [LiveReload Safari/Chrome/Firefox extension](http://livereload.com/extensions#installing-sections).
 
 ## Installation
 
 ```
 gem install smallvictories
-```
-
-## Config
-
-Small Victories looks for a `_config.yml` file in the directory where `sv` is
-run from.
-
-+ `source`: Relative path to find and watch files for compiling and compiling.
-+ `destination`: Relative path for where to save final files.
-+ `stylesheet`: Main stylesheet (Sass or CSS) to be compiled into destination.
-+ `javascript`: Main javascript file (JS or CoffeeScript) to be compiled into destination.
-+ `layout`: Liquid layout file to render all other html and liquid files through.
-+ `includes`: Directory where liquid rendered should expect to find snippets.
-
-### Default Configuration
-
-```yaml
-source: 'dev'
-destination: 'prod'
-stylesheet: '_sv_custom.css'
-javascript: '_sv_custom.js'
-layout: '_layout.liquid'
-includes: '_includes'
 ```
 
 ## Commands
@@ -139,9 +57,91 @@ Command: `sv compile`
 
 ### Watch
 
-Watch for changes and compile files.
+Watch for changes then compile files and notify LiveReload.
  
 Command: `sv watch`
+
+### Default Folder Structure
+
+The default setup for Small Victories is to have your production files in the
+root and your development files in the `_` directory.
+
+```text
+Dropbox
+  └── Small Victories
+    └── Your Site
+      └── _
+      │   ├── _includes
+      │   │ └── _head.liquid
+      │   ├── _layout.liquid
+      │   ├── _sv_custom.css
+      │   ├── _sv_custom.js
+      │   └── index.liquid
+      │
+      ├── _sv_custom.css
+      ├── _sv_custom.js
+      └── index.html
+```
+
+You would then run `sv watch` from within `Your Site` and Small Victories will
+watch for changes in `_` and compile them to the `Your Site` folder.
+
+## How does it work with Small Victories?
+
+This gem allows you to build a site using the tools you're used to and compile a
+version directly into a Small Victories folder.
+
+When you watch or build your site it will output the files into your Dropbox
+folder, which in turn will trigger Small Victories to rebuild your site.
+
+### Getting Started
+
+First, create a new Small Victories site either through your Small Victories
+admin or by creating a new folder in Dropbox/Small Victories.
+
+In terminal, cd into the directory and run:
+ 
+`sv bootstrap`
+ 
+Then:
+ 
+`sv compile`
+ 
+And finally:
+ 
+`sv watch`
+ 
+With the default config, Small Victories will watch and compile your files into
+the root of your site folder.
+
+## Why is there now web server?
+
+There are other static site generators (like [Jekyll](http://jekyllrb.com/) or [Middleman](https://middlemanapp.com/)) that you can use to fire up a web server (and more!), Small Victories helps you build a static site for hosting on Small Victories, so if you don't need anything more than a static HTML file that can be dropped into your Small Victories folder.
+
+## Config
+
+You can override Small Victories config by including a `_sv_config.yml` file in the directory where `sv` is
+run from.
+
+You can set the following options:
+
++ `source`: Relative path to find and watch files for compiling and compiling.
++ `destination`: Relative path for where to save final files.
++ `stylesheet`: Main stylesheet (Sass or CSS) to be compiled into destination.
++ `javascript`: Main javascript file (JS or CoffeeScript) to be compiled into destination.
++ `layout`: Liquid layout file to render all other html and liquid files through.
++ `includes`: Directory where liquid rendered should expect to find snippets.
+
+### Default Configuration
+
+```yaml
+source: '_'
+destination: ''
+stylesheet: '_sv_custom.css'
+javascript: '_sv_custom.js'
+layout: '_layout.liquid'
+includes: '_includes'
+```
 
 ## Building Locally
 

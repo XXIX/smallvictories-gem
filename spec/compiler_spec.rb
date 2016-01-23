@@ -39,16 +39,30 @@ describe SmallVictories do
   end
 
   describe '#compile_css' do
-    it 'compules and prefixes the css file' do
+    it 'compiles the css file' do
       compiler.compile_css
+      expect(File.open(destination_css).read).to include '.bootstrap{color:black;box-sizing:content-box}html{background:white}body div{background:red}p{font-size:30px}'
+    end
+  end
+
+  describe '#minify_css' do
+    it 'compiles and prefixes the css file' do
+      compiler.minify_css
       expect(File.open(destination_css).read).to include '.bootstrap{color:black;-webkit-box-sizing:content-box;box-sizing:content-box}html{background:white}body div{background:red}p{font-size:30px}'
     end
   end
 
   describe '#compile_js' do
-    it 'compules the js file' do
+    it 'compiles the js file' do
       compiler.compile_js
       expect(File.open(destination_js).read).to include '(function(){alert("hi")}).call(this),console.log("hi");'
+    end
+  end
+
+  describe '#minify_js' do
+    it 'minifies the js file' do
+      compiler.minify_js
+      expect(File.open(destination_js).read).to include '(function(){alert("hi")}).call(this);console.log("hi");'
     end
   end
 

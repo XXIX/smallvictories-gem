@@ -9,7 +9,7 @@ RSpec.configure do |config|
   end
 
   config.after do
-    %w(./fixtures/destination/_sv_custom.css ./fixtures/destination/_sv_custom.js ./fixtures/destination/index.html ./_config.yml).each { |path| clean_file(path) }
+    %w(./fixtures/destination/_sv_custom.css ./fixtures/destination/_sv_custom.js ./fixtures/destination/index.html ./_sv_config.yml).each { |path| clean_file(path) }
   end
 end
 

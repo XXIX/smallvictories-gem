@@ -5,11 +5,11 @@ describe SmallVictories do
 
   context 'with no config file' do
     it 'defaults to source directory' do
-      expect(configuration.source).to eq 'dev'
+      expect(configuration.source).to eq '_'
     end
 
     it 'defaults to destination directory' do
-      expect(configuration.destination).to eq 'prod'
+      expect(configuration.destination).to eq ''
     end
 
     it 'defaults stylesheet file' do
@@ -31,7 +31,7 @@ describe SmallVictories do
 
   context 'with config file' do
     before do
-      FileUtils.cp('fixtures/source/_config.yml', './')
+      FileUtils.cp('fixtures/source/_sv_config.yml', './')
     end
 
     it 'reads the source folder' do
