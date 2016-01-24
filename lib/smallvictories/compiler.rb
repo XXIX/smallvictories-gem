@@ -31,7 +31,7 @@ module SmallVictories
           layout = Liquid::Template.parse(layout_file)
         end
       rescue => e
-        SmallVictories.logger.error "Liquid Error\n#{e}"
+        SmallVictories.logger.error "Liquid Error\n#{e}\n#{e.backtrace.first}"
         return
       end
 
@@ -55,7 +55,7 @@ module SmallVictories
           File.open(File.join(config.full_destination_path, output_file_name), 'w') { |file| file.write(html) }
           SmallVictories.logger.info "compiled #{config.destination}/#{output_file_name}"
         rescue => e
-          SmallVictories.logger.error "#{path}\n#{e}"
+          SmallVictories.logger.error "#{path}\n#{e}\n#{e.backtrace.first}"
         end
       end
     end
@@ -77,7 +77,7 @@ module SmallVictories
             SmallVictories.logger.info "compiled #{File.join(config.destination, bundle.last)}"
           end
         rescue => e
-          SmallVictories.logger.error "#{bundle}\n#{e}"
+          SmallVictories.logger.error "#{bundle.first}\n#{e}\n#{e.backtrace.first}"
         end
       end
     end
@@ -98,7 +98,7 @@ module SmallVictories
           SmallVictories.logger.info "prefixed #{config.destination}/#{config.stylesheets.last}"
         end
       rescue => e
-        SmallVictories.logger.error "#{path}\n#{e}"
+        SmallVictories.logger.error "#{path}\n#{e}\n#{e.backtrace.first}"
       end
     end
 
