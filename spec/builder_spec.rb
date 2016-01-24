@@ -8,15 +8,15 @@ describe SmallVictories do
       builder.setup 'spec/fixtures/new'
       expect(File.exists?('fixtures/new/_sv_config.yml')).to eq true
       expect(File.exists?('fixtures/new/.sv_guardfile')).to eq true
-      expect(File.exists?('fixtures/new/_/_layout.liquid')).to eq true
-      expect(File.exists?('fixtures/new/_/index.liquid')).to eq true
-      expect(File.exists?('fixtures/new/_/_includes/_head.liquid')).to eq true
-      expect(File.exists?('fixtures/new/_/application.js')).to eq true
-      expect(File.exists?('fixtures/new/_/application.css')).to eq true
+      expect(File.exists?('fixtures/new/src/_layout.liquid')).to eq true
+      expect(File.exists?('fixtures/new/src/index.liquid')).to eq true
+      expect(File.exists?('fixtures/new/src/_includes/_head.liquid')).to eq true
+      expect(File.exists?('fixtures/new/src/application.js')).to eq true
+      expect(File.exists?('fixtures/new/src/application.css')).to eq true
     end
 
     after do
-      %w(fixtures/new/_sv_config.yml fixtures/new/.sv_guardfile fixtures/new/_/index.liquid fixtures/new/_/application.css fixtures/new/_/application.js fixtures/new/_/_includes/_head.liquid fixtures/new/_/_layout.liquid).each { |path| clean_file(path) }
+      %w(fixtures/new/_sv_config.yml fixtures/new/.sv_guardfile fixtures/new/src/index.liquid fixtures/new/src/application.css fixtures/new/src/application.js fixtures/new/src/_includes/_head.liquid fixtures/new/src/_layout.liquid).each { |path| clean_file(path) }
     end
   end
 end
