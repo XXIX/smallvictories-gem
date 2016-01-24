@@ -64,13 +64,13 @@ Command: `sv watch`
 ### Default Folder Structure
 
 The default setup for Small Victories is to have your production files in the
-root and your development files in the `_` directory.
+root and your development files in the `src` directory.
 
 ```text
 Dropbox
   └── Small Victories
     └── Your Site
-      └── _
+      └── src
       │   ├── _includes
       │   │ └── _head.liquid
       │   ├── _layout.liquid
@@ -84,7 +84,7 @@ Dropbox
 ```
 
 You would then run `sv watch` from within `Your Site` and Small Victories will
-watch for changes in `_` and compile them to the `Your Site` folder.
+watch for changes in `src` and compile them to the `Your Site` folder.
 
 ## How does it work with Small Victories?
 
@@ -135,7 +135,7 @@ You can set the following options:
 ### Default Configuration
 
 ```yaml
-source: '_'
+source: 'src'
 destination: ''
 source_stylesheet: 'application.css'
 source_javascript: 'application.js'
