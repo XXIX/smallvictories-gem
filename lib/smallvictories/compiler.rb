@@ -11,11 +11,11 @@ module SmallVictories
     end
 
     def compile_css
-      package  [config.stylesheet]
+      package  [config.stylesheets]
     end
 
     def compile_js
-      package  [config.javascript]
+      package  [config.javascripts]
     end
 
     def compile_html
@@ -42,13 +42,14 @@ module SmallVictories
 
           file = File.open(path).read
           liquid = Liquid::Template.parse(file)
-          content = liquid.render('config' => { 'stylesheet' => config.stylesheet, 'javascript' => config.javascript })
+          data = { 'config' => { 'stylesheet' => config.stylesheets.last, 'javascript' => config.javascripts.last } }
+          content = liquid.render(data)
           output_file_name = file_name.concat('.html')
           output_path = File.join(config.full_destination_path, output_file_name)
           if layout
-            html = layout.render('content_for_layout' => liquid.render, 'config' => { 'stylesheet' => config.stylesheet, 'javascript' => config.javascript })
+            html = layout.render(data.merge('content_for_layout' => liquid.render))
           else
-            html = liquid.render('config' => { 'stylesheet' => config.stylesheet, 'javascript' => config.javascript })
+            html = content
           end
           Dir.mkdir(config.full_destination_path) unless File.exists?(config.full_destination_path)
           File.open(File.join(config.full_destination_path, output_file_name), 'w') { |file| file.write(html) }
@@ -59,22 +60,21 @@ module SmallVictories
       end
     end
 
-    def package bundles=[config.stylesheet, config.javascript], options={}
+    def package bundles=[config.stylesheets, config.javascripts], options={}
       sprockets = Sprockets::Environment.new(ROOT) do |environment|
         environment.gzip = true
         environment.logger = SmallVictories.logger
         environment.js_compressor  = options[:js_compressor] || :uglify
-        environment.css_compressor = options[:css_compressor] || :sass
+        environment.css_compressor = options[:css_compressor] || :scss
       end
 
       sprockets.append_path(config.full_source_path)
       bundles.each do |bundle|
         begin
-          if assets = sprockets.find_asset(bundle)
-            prefix, basename = assets.pathname.to_s.split('/')[-2..-1]
+          if assets = sprockets.find_asset(bundle.first)
             FileUtils.mkpath config.full_destination_path
-            assets.write_to File.join(config.full_destination_path,  basename)
-            SmallVictories.logger.info "compiled #{config.destination}/#{basename}"
+            assets.write_to File.join(config.full_destination_path,  bundle.last)
+            SmallVictories.logger.info "compiled #{File.join(config.destination, bundle.last)}"
           end
         rescue => e
           SmallVictories.logger.error "#{bundle}\n#{e}"
@@ -84,7 +84,7 @@ module SmallVictories
 
     def prefix_css
       begin
-        path = File.join(config.full_destination_path, config.stylesheet)
+        path = File.join(config.full_destination_path, config.stylesheets.last)
         css = File.open(path).read
         prefixed = AutoprefixerRails.process(css, browsers: ['last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'], cascade: false)
         File.open(path, 'w') { |file| file.write(prefixed.css) }
@@ -93,9 +93,9 @@ module SmallVictories
           environment.css_compressor = :yui
         end
         sprockets.append_path(config.full_destination_path)
-        if assets = sprockets.find_asset(config.stylesheet)
-          assets.write_to File.join(config.full_destination_path, config.stylesheet)
-          SmallVictories.logger.info "prefixed #{config.destination}/#{config.stylesheet}"
+        if assets = sprockets.find_asset(config.stylesheets.last)
+          assets.write_to File.join(config.full_destination_path, config.stylesheets.last)
+          SmallVictories.logger.info "prefixed #{File.join(config.destination, config.stylesheets.last)}"
         end
       rescue => e
         SmallVictories.logger.error "#{path}\n#{e}"
@@ -103,12 +103,12 @@ module SmallVictories
     end
 
     def minify_css
-      package  [config.stylesheet]
+      package  [config.stylesheets]
       prefix_css
     end
 
     def minify_js
-      package [config.javascript], { js_compressor: :closure }
+      package [config.javascripts], { js_compressor: :closure }
     end
   end
 end

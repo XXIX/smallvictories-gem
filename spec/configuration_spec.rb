@@ -12,12 +12,20 @@ describe SmallVictories do
       expect(configuration.destination).to eq ''
     end
 
-    it 'defaults stylesheet file' do
-      expect(configuration.stylesheet).to eq '_sv_custom.css'
+    it 'defaults source stylesheet file' do
+      expect(configuration.source_stylesheet).to eq 'application.css'
     end
 
-    it 'defaults javascript file' do
-      expect(configuration.javascript).to eq '_sv_custom.js'
+    it 'defaults destination stylesheet file' do
+      expect(configuration.destination_stylesheet).to eq '_sv_custom.css'
+    end
+
+    it 'defaults source javascript file' do
+      expect(configuration.source_javascript).to eq 'application.js'
+    end
+
+    it 'defaults destination javascript file' do
+      expect(configuration.destination_javascript).to eq '_sv_custom.js'
     end
 
     it 'defaults layout file' do
@@ -43,11 +51,11 @@ describe SmallVictories do
     end
 
     it 'reads the output css file' do
-      expect(configuration.stylesheet).to eq 'my-stylesheet.css'
+      expect(configuration.source_stylesheet).to eq 'my-stylesheet.css'
     end
 
     it 'reads the output js file' do
-      expect(configuration.javascript).to eq 'my-javascript.js'
+      expect(configuration.source_javascript).to eq 'my-javascript.js'
     end
 
     it 'reads layout file' do

@@ -8,3 +8,4 @@ require "smallvictories/configuration"
 require "smallvictories/builder"
 require "smallvictories/compiler"
 require "smallvictories/watcher"
+require 'sassc'

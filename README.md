@@ -74,8 +74,8 @@ Dropbox
       │   ├── _includes
       │   │ └── _head.liquid
       │   ├── _layout.liquid
-      │   ├── _sv_custom.css
-      │   ├── _sv_custom.js
+      │   ├── application.css
+      │   ├── application.js
       │   └── index.liquid
       │
       ├── _sv_custom.css
@@ -137,8 +137,10 @@ You can set the following options:
 ```yaml
 source: '_'
 destination: ''
-stylesheet: '_sv_custom.css'
-javascript: '_sv_custom.js'
+source_stylesheet: 'application.css'
+source_javascript: 'application.js'
+destination_stylesheet: '_sv_custom.css'
+destination_javascript: '_sv_custom.js'
 layout: '_layout.liquid'
 includes: '_includes'
 ```

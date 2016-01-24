@@ -54,8 +54,10 @@ module SmallVictories
       d = YAML::load_file(File.join(src_directory, 'config.yml'))
       d['source'] = DEFAULT_SOURCE
       d['destination'] = DEFAULT_DESTINATION
-      d['stylesheet'] = DEFAULT_STYLESHEET
-      d['javascript'] = DEFAULT_JAVASCRIPT
+      d['source_stylesheet'] = DEFAULT_SOURCE_STYLESHEET
+      d['source_javascript'] = DEFAULT_SOURCE_JAVASCRIPT
+      d['destination_stylesheet'] = DEFAULT_DESTINATION_STYLESHEET
+      d['destination_javascript'] = DEFAULT_DESTINATION_JAVASCRIPT
       d['layout'] = DEFAULT_LAYOUT
       d['includes'] = DEFAULT_INCLUDES
       File.open(File.join(folder_path, CONFIG_FILE), 'w') {|f| f.write d.to_yaml }
@@ -66,11 +68,11 @@ module SmallVictories
     end
 
     def setup_stylesheet
-      create_src_file('stylesheet.css', File.join(folder_source_path, config.stylesheet))
+      create_src_file('stylesheet.css', File.join(folder_source_path, config.stylesheets.first))
     end
 
     def setup_javascript
-      create_src_file('javascript.js', File.join(folder_source_path, config.javascript))
+      create_src_file('javascript.js', File.join(folder_source_path, config.javascripts.first))
     end
 
     def setup_html

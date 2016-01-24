@@ -32,12 +32,28 @@ module SmallVictories
       File.join(ROOT, destination)
     end
 
-    def javascript
-      config_file(:javascript) || DEFAULT_JAVASCRIPT
+    def source_javascript
+      config_file(:source_javascript) || DEFAULT_SOURCE_JAVASCRIPT
     end
 
-    def stylesheet
-      config_file(:stylesheet) || DEFAULT_STYLESHEET
+    def destination_javascript
+      config_file(:destination_javascript) || DEFAULT_DESTINATION_JAVASCRIPT
+    end
+
+    def javascripts
+      [source_javascript, destination_javascript]
+    end
+
+    def source_stylesheet
+      config_file(:source_stylesheet) || DEFAULT_SOURCE_STYLESHEET
+    end
+
+    def destination_stylesheet
+      config_file(:destination_stylesheet) || DEFAULT_DESTINATION_STYLESHEET
+    end
+
+    def stylesheets
+      [source_stylesheet, destination_stylesheet]
     end
 
     def layout
