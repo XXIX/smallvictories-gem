@@ -49,7 +49,7 @@ module SmallVictories
           if layout
             html = layout.render(data.merge('content_for_layout' => liquid.render))
           else
-            html = content
+            html = liquid.render(data)
           end
           Dir.mkdir(config.full_destination_path) unless File.exists?(config.full_destination_path)
           File.open(File.join(config.full_destination_path, output_file_name), 'w') { |file| file.write(html) }
@@ -61,14 +61,14 @@ module SmallVictories
     end
 
     def package bundles=[config.stylesheets, config.javascripts], options={}
-      sprockets = Sprockets::Environment.new(ROOT) do |environment|
+      sprockets = Sprockets::Environment.new(config.full_source_path) do |environment|
         environment.gzip = true
         environment.logger = SmallVictories.logger
         environment.js_compressor  = options[:js_compressor] || :uglify
-        environment.css_compressor = options[:css_compressor] || :scss
+        environment.css_compressor = options[:css_compressor] || :sass
       end
 
-      sprockets.append_path(config.full_source_path)
+      sprockets.append_path('.')
       bundles.each do |bundle|
         begin
           if assets = sprockets.find_asset(bundle.first)
@@ -89,13 +89,13 @@ module SmallVictories
         prefixed = AutoprefixerRails.process(css, browsers: ['last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'], cascade: false)
         File.open(path, 'w') { |file| file.write(prefixed.css) }
 
-        sprockets = Sprockets::Environment.new(ROOT) do |environment|
+        sprockets = Sprockets::Environment.new(config.full_source_path) do |environment|
           environment.css_compressor = :yui
         end
         sprockets.append_path(config.full_destination_path)
         if assets = sprockets.find_asset(config.stylesheets.last)
           assets.write_to File.join(config.full_destination_path, config.stylesheets.last)
-          SmallVictories.logger.info "prefixed #{File.join(config.destination, config.stylesheets.last)}"
+          SmallVictories.logger.info "prefixed #{config.destination}/#{config.stylesheets.last}"
         end
       rescue => e
         SmallVictories.logger.error "#{path}\n#{e}"

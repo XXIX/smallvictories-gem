@@ -8,4 +8,7 @@ require "smallvictories/configuration"
 require "smallvictories/builder"
 require "smallvictories/compiler"
 require "smallvictories/watcher"
-require 'sassc'
+require "sassc/compressor"
+require "sassc/functions"
+require "sassc/importer"
+require "sassc/template"
