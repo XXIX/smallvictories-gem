@@ -9,6 +9,7 @@ def help
   Commands:
     bootstrap, bootstrap FOLDER     Setup folder with default files
     compile                         Compile files
+    inline                          Inline CSS in your HTML files
     watch                           Watch for changes and compile files
     help                            Prints this help document
     version                         Prints the small victories gem version
@@ -36,7 +37,29 @@ def compile
   compiler.compile_html
 end
 
+def inline
+  config = SmallVictories::Configuration.new
+  compiler = SmallVictories::Compiler.new(config: config)
+  compiler.compile_css
+  compiler.compile_js
+  compiler.compile_html
+  compiler.minify_css
+  compiler.minify_js
+  compiler.inline_html
+end
+
+def minify
+  config = SmallVictories::Configuration.new
+  compiler = SmallVictories::Compiler.new(config: config)
+  compiler.compile_css
+  compiler.compile_js
+  compiler.compile_html
+  compiler.minify_css
+  compiler.minify_js
+end
+
 def watch
+  compile
   config = SmallVictories::Configuration.new
   compiler = SmallVictories::Compiler.new(config: config)
   watcher = SmallVictories::Watcher.new(compiler: compiler)
@@ -52,6 +75,8 @@ when 'bootstrap'
   bootstrap ARGV[1]
 when 'compile'
   compile
+when 'inline'
+  inline
 when 'watch'
   watch
 else

@@ -1,4 +1,7 @@
 html {
   background: red;
-  box-sizing: content-box;
+}
+
+p {
+  font-size: 12px;
 }

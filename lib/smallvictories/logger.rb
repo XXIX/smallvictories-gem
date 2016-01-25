@@ -10,6 +10,8 @@ module SmallVictories
           case severity
           when 'INFO'
             string.concat("👍  ")
+          when 'WARN'
+            string.concat("⚠️  ")
           when 'ERROR'
             string.concat("🔥  ")
           end

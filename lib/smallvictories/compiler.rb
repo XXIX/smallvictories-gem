@@ -1,6 +1,7 @@
 require 'sprockets'
 require 'autoprefixer-rails'
 require 'liquid'
+require 'premailer'
 
 module SmallVictories
   class Compiler
@@ -20,6 +21,10 @@ module SmallVictories
 
     def compile_html
       liquid
+    end
+
+    def inline_html
+      premail
     end
 
     def liquid
@@ -95,7 +100,7 @@ module SmallVictories
         sprockets.append_path(config.full_destination_path)
         if assets = sprockets.find_asset(config.stylesheets.last)
           assets.write_to File.join(config.full_destination_path, config.stylesheets.last)
-          SmallVictories.logger.info "prefixed #{config.destination}/#{config.stylesheets.last}"
+          SmallVictories.logger.info "prefixed #{File.join(config.destination,config.stylesheets.last)}"
         end
       rescue => e
         SmallVictories.logger.error "#{path}\n#{e}\n#{e.backtrace.first}"
@@ -109,6 +114,30 @@ module SmallVictories
 
     def minify_js
       package [config.javascripts], { js_compressor: :closure }
+    end
+
+    def premail
+      Dir.glob([File.join(config.full_destination_path, '*.html')]) do |path|
+        begin
+          premailer = Premailer.new(path, warn_level: Premailer::Warnings::SAFE)
+          File.open(path, 'w') { |file| file.write(premailer.to_inline_css) }
+
+          # Output any CSS warnings
+          premailer.warnings.each do |w|
+            SmallVictories.logger.warn "#{w[:message]} (#{w[:level]}) may not render properly in #{w[:clients]}"
+          end
+          file_name = Pathname.new(path).basename
+          SmallVictories.logger.info "inlined #{File.join(config.destination, file_name)}"
+          size = File.size(path)
+          if size > 102000
+            SmallVictories.logger.warn "size is greater than 120kb (#{size})"
+          else
+            SmallVictories.logger.info "size is less than 120kb (#{size})"
+          end
+        rescue => e
+          SmallVictories.logger.error "Inline Error\n#{e}"
+        end
+      end
     end
   end
 end

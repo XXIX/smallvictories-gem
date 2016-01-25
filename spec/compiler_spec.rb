@@ -84,6 +84,18 @@ describe SmallVictories do
     end
   end
 
+  describe '#inline_html' do
+    before do
+      FileUtils.cp('fixtures/email/index.html', 'fixtures/destination')
+      FileUtils.cp('fixtures/email/_sv_custom.css', 'fixtures/destination')
+    end
+
+    it 'inlines the compiled files' do
+      compiler.inline_html
+      expect(File.open(destination_html).read).to include "<p style=\"font-size: 12px\">Hello Email Friend</p>"
+    end
+  end
+
   context 'with invalid files' do
     before do
         allow_any_instance_of(SmallVictories::Configuration).to receive(:source).and_return('./spec/fixtures/invalid')

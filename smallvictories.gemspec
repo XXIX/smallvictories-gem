@@ -29,6 +29,8 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'uglifier', '~> 2.7'
   spec.add_runtime_dependency 'yui-compressor', '~> 0.12'
   spec.add_runtime_dependency 'closure-compiler', '~> 1.1'
+  spec.add_runtime_dependency 'premailer', '~> 1.8'
+  spec.add_runtime_dependency 'nokogiri', '~> 1.4'
 
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"

@@ -55,6 +55,12 @@ folder.
  
 Command: `sv compile`
 
+### Inline
+
+Compile files and then inline CSS in your HTML files.
+ 
+Command: `sv inline`
+
 ### Watch
 
 Watch for changes then compile files and notify LiveReload.
