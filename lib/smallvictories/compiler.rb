@@ -40,14 +40,22 @@ module SmallVictories
         return
       end
 
-      Dir.glob([File.join(config.full_source_path, '*.html'), File.join(config.full_source_path, '*.liquid')]) do |path|
+      Dir.glob([File.join(config.full_source_path, '**/*.html'), File.join(config.full_source_path, '**/*.liquid')]) do |path|
         begin
-          file_name = Pathname.new(path).basename.to_s.split('.').first
+          pathname = Pathname.new(path)
+          file_name = pathname.basename.to_s.split('.').first
+          folder_path = pathname.dirname.to_s.gsub(config.full_source_path, '')
+          full_output_path = File.join(config.full_destination_path, folder_path)
+
           next if file_name =~ /^_/ # do not render partials
 
           file = File.open(path).read
           liquid = Liquid::Template.parse(file)
-          data = { 'config' => { 'stylesheet' => config.stylesheets.last, 'javascript' => config.javascripts.last } }
+          stylesheet_path = Pathname.new(config.full_destination_path)
+          file_path = Pathname.new(full_output_path)
+          relative_path = stylesheet_path.relative_path_from(file_path)
+
+          data = { 'config' => { 'stylesheet' => File.join(relative_path, config.stylesheets.last), 'javascript' => File.join(relative_path, config.javascripts.last) } }
           content = liquid.render(data)
           output_file_name = file_name.concat('.html')
           output_path = File.join(config.full_destination_path, output_file_name)
@@ -56,9 +64,9 @@ module SmallVictories
           else
             html = liquid.render(data)
           end
-          Dir.mkdir(config.full_destination_path) unless File.exists?(config.full_destination_path)
-          File.open(File.join(config.full_destination_path, output_file_name), 'w') { |file| file.write(html) }
-          SmallVictories.logger.info "compiled #{config.destination}/#{output_file_name}"
+          Dir.mkdir(full_output_path) unless File.exists?(full_output_path)
+          File.open(File.join(full_output_path, output_file_name), 'w') { |file| file.write(html) }
+          SmallVictories.logger.info "compiled #{File.join(config.destination, folder_path, output_file_name)}"
         rescue => e
           SmallVictories.logger.error "#{path}\n#{e}\n#{e.backtrace.first}"
         end
@@ -117,7 +125,7 @@ module SmallVictories
     end
 
     def premail
-      Dir.glob([File.join(config.full_destination_path, '*.html')]) do |path|
+      Dir.glob([File.join(config.full_destination_path, '**/*.html')]) do |path|
         begin
           premailer = Premailer.new(path, warn_level: Premailer::Warnings::SAFE)
           File.open(path, 'w') { |file| file.write(premailer.to_inline_css) }
