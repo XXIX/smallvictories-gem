@@ -13,7 +13,7 @@ module SmallVictories
     end
 
     def config_file key
-      config[key.to_s].chomp("/").reverse.chomp("/").reverse if config.has_key?(key.to_s)
+      config[key.to_s].to_s.chomp("/").reverse.chomp("/").reverse if config.has_key?(key.to_s)
     end
 
     def source
@@ -56,6 +56,18 @@ module SmallVictories
       [source_stylesheet, destination_stylesheet]
     end
 
+    def source_sprite
+      config_file(:source_sprite) || DEFAULT_SOURCE_SPRITE
+    end
+
+    def destination_sprite_file
+      config_file(:destination_sprite_file) || DEFAULT_DESTINATION_SPRITE_FILE
+    end
+
+    def destination_sprite_style
+      config_file(:destination_sprite_style) || DEFAULT_DESTINATION_SPRITE_STYLE
+    end
+
     def layout
       config_file(:layout) || DEFAULT_LAYOUT
     end
@@ -70,6 +82,22 @@ module SmallVictories
 
     def full_includes_path
       File.join(full_source_path, includes)
+    end
+
+    def compile_css
+      eval config_file(:compile_css) || 'true'
+    end
+
+    def compile_html
+      eval config_file(:compile_html) || 'true'
+    end
+
+    def compile_js
+      eval config_file(:compile_js) || 'true'
+    end
+
+    def compile_sprite
+      eval config_file(:compile_sprite) || 'true'
     end
   end
 end

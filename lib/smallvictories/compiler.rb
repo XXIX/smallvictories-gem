@@ -2,6 +2,8 @@ require 'sprockets'
 require 'autoprefixer-rails'
 require 'liquid'
 require 'premailer'
+require 'sprite_factory'
+require 'rails-sass-images'
 
 module SmallVictories
   class Compiler
@@ -12,15 +14,19 @@ module SmallVictories
     end
 
     def compile_css
-      package  [config.stylesheets]
+      package  [config.stylesheets] if config.compile_css
     end
 
     def compile_js
-      package  [config.javascripts]
+      package  [config.javascripts] if config.compile_js
     end
 
     def compile_html
-      liquid
+      liquid if config.compile_html
+    end
+
+    def compile_sprite
+      sprite if config.compile_sprite
     end
 
     def inline_html
@@ -47,7 +53,7 @@ module SmallVictories
           folder_path = pathname.dirname.to_s.gsub(config.full_source_path, '')
           full_output_path = File.join(config.full_destination_path, folder_path)
 
-          next if file_name =~ /^_/ # do not render partials
+          next if file_name =~ /^_/ # do not render partials or layout
 
           file = File.open(path).read
           liquid = Liquid::Template.parse(file)
@@ -80,6 +86,7 @@ module SmallVictories
         environment.js_compressor  = options[:js_compressor] || :uglify
         environment.css_compressor = options[:css_compressor] || :sass
       end
+      RailsSassImages.install(sprockets)
 
       sprockets.append_path('.')
       bundles.each do |bundle|
@@ -146,6 +153,24 @@ module SmallVictories
           SmallVictories.logger.error "Inline Error\n#{e}"
         end
       end
+    end
+
+    def sprite
+      css = "@import 'rails-sass-images';\n"
+      css += SpriteFactory.run!(File.join(config.full_source_path, config.source_sprite),
+        output_image: File.join(config.full_source_path, config.destination_sprite_file),
+        style: :scss,
+        margin: 20,
+        layout: :vertical,
+        nocss: true,
+        sanitizer: true) do |images|
+          images.map do |image_name, image_data|
+            ".sprite-#{image_name} { background-image: url('#{config.destination_sprite_file}'); background-size: (image-width('#{File.join(config.destination_sprite_file)}')/2) auto; background-repeat: no-repeat; background-position: (#{image_data[:cssx]}px/-2) (#{image_data[:cssy]}px/-2); height: (#{image_data[:cssh]}px/2) + 1px; width: (#{image_data[:cssw]}px/2) + 1px;}"
+          end.join("\n")
+        end
+      FileUtils.cp(File.join(config.full_source_path, config.destination_sprite_file), File.join(config.full_destination_path, config.destination_sprite_file))
+      File.open(File.join(config.full_source_path, config.destination_sprite_style), 'w') { |file| file.write(css) }
+      SmallVictories.logger.info "compiled #{File.join(config.destination, config.destination_sprite_style)}"
     end
   end
 end

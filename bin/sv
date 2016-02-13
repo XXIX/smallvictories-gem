@@ -16,7 +16,7 @@ def help
 
   Options:
     -h, --help                      Prints this help document
-    -v, --version                   Prints the siteleaf gem version
+    -v, --version                   Prints the small victories gem version
 
   See https://github.com/xxix/smallvictories-gem for additional documentation.
   )
@@ -32,6 +32,7 @@ end
 def compile
   config = SmallVictories::Configuration.new
   compiler = SmallVictories::Compiler.new(config: config)
+  compiler.compile_sprite
   compiler.compile_css
   compiler.compile_js
   compiler.compile_html

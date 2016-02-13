@@ -2,7 +2,14 @@ source: '/my-source-folder/'
 destination: 'my-site-folder/'
 source_stylesheet: 'my-stylesheet.css'
 source_javascript: 'my-javascript.js'
+source_sprite: 'my-sprite'
 destination_stylesheet: 'stylesheet.css'
 destination_javascript: 'javascript.js'
+destination_sprite_file: 'my-sprite.png'
+destination_sprite_style: 'my-sprite.css'
 layout: '_my-template.liquid'
 includes: 'snippets'
+compile_html: false
+compile_js: false
+compile_css: false
+compile_sprite: false

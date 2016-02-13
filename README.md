@@ -19,7 +19,11 @@ includes folder.
  
 You don't have to use a layout file if you don't want to, the files will still
 be copied to the destination folder.
-
+ 
+[Sprite Factory](https://github.com/jakesgordon/sprite-factory) looks for image
+files in the sprite folder and generates a single sprite png and sprite
+stylesheet.
+ 
 [Guard LiveReload](https://github.com/guard/guard-livereload) is used to notify
 the browser to automatically reload. It needs to be used with
 the [LiveReload Safari/Chrome/Firefox extension](http://livereload.com/extensions#installing-sections).
@@ -28,6 +32,14 @@ the [LiveReload Safari/Chrome/Firefox extension](http://livereload.com/extension
 
 ```
 gem install smallvictories
+```
+
+To use the [Sprite Factory](https://github.com/jakesgordon/sprite-factory) to
+generate Sprite CSS you will need to install image magick which you can do with
+homebrew:
+ 
+```
+brew install imagemagick
 ```
 
 ## Commands
@@ -50,7 +62,7 @@ Command: `sv bootstrap my-folder`
 
 Compile files.
  
-Renders Sass/CSS, JavaScript/CoffeeScript, HTML/Liquid in the destination
+Renders Sass/CSS, JavaScript/CoffeeScript, HTML/Liquid and Sprite in the destination
 folder.
  
 Command: `sv compile`
@@ -79,13 +91,16 @@ Dropbox
       └── _src
       │   ├── _includes
       │   │ └── _head.liquid
+      │   ├── _sprite
       │   ├── _layout.liquid
-      │   ├── application.css
+      │   ├── applscation.css
       │   ├── application.js
-      │   └── index.liquid
+      │   ├── index.liquid
+      │   └── sprite.css
       │
       ├── _sv_custom.css
       ├── _sv_custom.js
+      ├── _sv_sprite.png
       └── index.html
 ```
 
@@ -137,6 +152,7 @@ You can set the following options:
 + `javascript`: Main javascript file (JS or CoffeeScript) to be compiled into destination.
 + `layout`: Liquid layout file to render all other html and liquid files through.
 + `includes`: Directory where liquid rendered should expect to find snippets.
++ `compile_html`: Should Small Victories compile HTML? Default is true.
 
 ### Default Configuration
 
@@ -149,6 +165,7 @@ destination_stylesheet: '_sv_custom.css'
 destination_javascript: '_sv_custom.js'
 layout: '_layout.liquid'
 includes: '_includes'
+compile_html: true
 ```
 
 ## Building Locally
