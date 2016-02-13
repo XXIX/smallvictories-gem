@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe SmallVictories do
   let(:builder) { SmallVictories::Builder.new(config: SmallVictories::Configuration.new) }
-  let(:files) { %w(fixtures/new/_sv_config.yml fixtures/new/.sv_guardfile fixtures/new/_src/index.liquid fixtures/new/_src/application.css fixtures/new/_src/application.js fixtures/new/_src/_includes/_head.liquid fixtures/new/_src/_layout.liquid fixtures/new/_src/_sprite/empty.png) }
+  let(:files) { %w(fixtures/new/_sv_config.yml fixtures/new/.sv_guardfile fixtures/new/_sv/index.liquid fixtures/new/_sv/application.css fixtures/new/_sv/application.js fixtures/new/_sv/_includes/_head.liquid fixtures/new/_sv/_layout.liquid fixtures/new/_sv/_sprite/empty.png) }
 
   context 'with folder' do
     it 'sets up default files' do

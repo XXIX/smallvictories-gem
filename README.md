@@ -82,13 +82,13 @@ Command: `sv watch`
 ### Default Folder Structure
 
 The default setup for Small Victories is to have your production files in the
-root and your development files in the `_src` directory.
+root and your development files in the `_sv` directory.
 
 ```text
 Dropbox
   └── Small Victories
     └── Your Site
-      └── _src
+      └── _sv
       │   ├── _includes
       │   │ └── _head.liquid
       │   ├── _sprite
@@ -97,7 +97,6 @@ Dropbox
       │   ├── application.js
       │   ├── index.liquid
       │   └── sprite.css
-      │
       ├── _sv_custom.css
       ├── _sv_custom.js
       ├── _sv_sprite.png
@@ -105,7 +104,7 @@ Dropbox
 ```
 
 You would then run `sv watch` from within `Your Site` and Small Victories will
-watch for changes in `_src` and compile them to the `Your Site` folder.
+watch for changes in `_sv` and compile them to the `Your Site` folder.
 
 ## How does it work with Small Victories?
 
@@ -135,7 +134,7 @@ And finally:
 With the default config, Small Victories will watch and compile your files into
 the root of your site folder.
 
-## Why is there now web server?
+## Why is there no web server?
 
 There are other static site generators (like [Jekyll](http://jekyllrb.com/) or [Middleman](https://middlemanapp.com/)) that you can use to fire up a web server (and more!), Small Victories helps you build a static site for hosting on Small Victories, so if you don't need anything more than a static HTML file that can be dropped into your Small Victories folder.
 
@@ -146,18 +145,21 @@ run from.
 
 You can set the following options:
 
-+ `source`: Relative path to find and watch files for compiling and compiling.
++ `source`: Relative path to find and watch files for watching and compiling.
 + `destination`: Relative path for where to save final files.
 + `stylesheet`: Main stylesheet (Sass or CSS) to be compiled into destination.
 + `javascript`: Main javascript file (JS or CoffeeScript) to be compiled into destination.
 + `layout`: Liquid layout file to render all other html and liquid files through.
 + `includes`: Directory where liquid rendered should expect to find snippets.
++ `compile_css`: Should Small Victories compile Sass/css? Default is true.
++ `compile_js`: Should Small Victories compile CoffeeScript/JavaScript? Default is true.
 + `compile_html`: Should Small Victories compile HTML? Default is true.
++ `compile_sprite`: Should Small Victories compile Sprite? Default is true.
 
 ### Default Configuration
 
 ```yaml
-source: '_src'
+source: '_sv'
 destination: ''
 source_stylesheet: 'application.css'
 source_javascript: 'application.js'
@@ -166,6 +168,16 @@ destination_javascript: '_sv_custom.js'
 layout: '_layout.liquid'
 includes: '_includes'
 compile_html: true
+```
+## What if I want to use Liquid tags on Small Victories?
+
+To keep liquid tags in your compiled html file for parsing on Small
+Victories you should wrap the tag in a {% raw %} tag.
+ 
+```liquid
+{% raw %}
+  {{ my tag }}
+{% endraw %}
 ```
 
 ## Building Locally

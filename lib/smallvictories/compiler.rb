@@ -156,8 +156,10 @@ module SmallVictories
     end
 
     def sprite
+      sprite_directory = File.join(config.full_source_path, config.source_sprite)
+      return unless Dir.exists?(sprite_directory)
       css = "@import 'rails-sass-images';\n"
-      css += SpriteFactory.run!(File.join(config.full_source_path, config.source_sprite),
+      css += SpriteFactory.run!(sprite_directory,
         output_image: File.join(config.full_source_path, config.destination_sprite_file),
         style: :scss,
         margin: 20,

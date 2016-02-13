@@ -134,7 +134,7 @@ describe SmallVictories do
 
   context 'with invalid files' do
     before do
-        allow_any_instance_of(SmallVictories::Configuration).to receive(:source).and_return('./spec/fixtures/invalid')
+      allow_any_instance_of(SmallVictories::Configuration).to receive(:source).and_return('./spec/fixtures/invalid')
     end
 
     it 'does not generate a css file' do
@@ -150,6 +150,11 @@ describe SmallVictories do
     it 'shows the error in html' do
       compiler.compile_html
       expect(File.open(destination_html).read).to include "<html>\n<h1>Index</h1>\nLiquid error: No such template 'snippet'\n\n</html>"
+    end
+
+    it 'ignores the sprite' do
+      compiler.compile_sprite
+      expect(File.exists?(destination_sprite_style)).to eq false
     end
   end
 

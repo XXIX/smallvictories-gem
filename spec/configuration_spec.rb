@@ -5,7 +5,7 @@ describe SmallVictories do
 
   context 'with no config file' do
     it 'defaults to source directory' do
-      expect(configuration.source).to eq '_src'
+      expect(configuration.source).to eq '_sv'
     end
 
     it 'defaults to destination directory' do
