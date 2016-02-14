@@ -2,7 +2,7 @@ module SmallVictories
   CONFIG_FILE = '_sv_config.yml'
   DEFAULT_SOURCE = '_sv'
   DEFAULT_DESTINATION = ''
-  DEFAULT_SOURCE_STYLESHEET = 'application.css'
+  DEFAULT_SOURCE_STYLESHEET = 'application.scss'
   DEFAULT_SOURCE_JAVASCRIPT = 'application.js'
   DEFAULT_SOURCE_SPRITE = '_sprite'
   DEFAULT_DESTINATION_STYLESHEET = '_sv_custom.css'

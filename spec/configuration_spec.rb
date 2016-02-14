@@ -13,7 +13,7 @@ describe SmallVictories do
     end
 
     it 'defaults source stylesheet file' do
-      expect(configuration.source_stylesheet).to eq 'application.css'
+      expect(configuration.source_stylesheet).to eq 'application.scss'
     end
 
     it 'defaults destination stylesheet file' do
