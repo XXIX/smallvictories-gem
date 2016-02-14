@@ -65,11 +65,11 @@ module SmallVictories
     end
 
     def setup_guardfile
-      create_src_file('Guardfile', File.join(folder_path, '.sv_guardfile'))
+      create_src_file('Guardfile', File.join(folder_path, GUARD_FILE))
     end
 
     def setup_stylesheet
-      create_src_file('stylesheet.css', File.join(folder_source_path, config.stylesheets.first))
+      create_src_file('stylesheet.scss', File.join(folder_source_path, config.stylesheets.first))
     end
 
     def setup_javascript

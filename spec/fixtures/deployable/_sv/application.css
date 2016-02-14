@@ -1,0 +1,19 @@
+/* Small Victories Sprockets File
+ *
+ * Any CSS and SCSS file within this directory and your sass directory
+ * can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ * Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
+ * about supported directives.
+ *
+ *= require_tree .
+ */
+
+p {
+  font-size: 30px;
+}

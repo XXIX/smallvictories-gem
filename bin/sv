@@ -9,7 +9,9 @@ def help
   Commands:
     bootstrap, bootstrap FOLDER     Setup folder with default files
     compile                         Compile files
+    deploy                          Minify and copy files to deploy folder
     inline                          Inline CSS in your HTML files
+    minify                          Minify files for production
     watch                           Watch for changes and compile files
     help                            Prints this help document
     version                         Prints the small victories gem version
@@ -36,6 +38,13 @@ def compile
   compiler.compile_css
   compiler.compile_js
   compiler.compile_html
+end
+
+def deploy folder=nil
+  config = SmallVictories::Configuration.new
+  deployer = SmallVictories::Deployer.new(config: config)
+  minify
+  deployer.copy folder
 end
 
 def inline
@@ -76,6 +85,8 @@ when 'bootstrap'
   bootstrap ARGV[1]
 when 'compile'
   compile
+when 'deploy'
+  deploy ARGV[1]
 when 'inline'
   inline
 when 'watch'

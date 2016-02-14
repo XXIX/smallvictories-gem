@@ -16,6 +16,10 @@ module SmallVictories
       config[key.to_s].to_s.chomp("/").reverse.chomp("/").reverse if config.has_key?(key.to_s)
     end
 
+    def deploy
+      config_file(:deploy) || DEFAULT_DEPLOY
+    end
+
     def source
       config_file(:source) || DEFAULT_SOURCE
     end

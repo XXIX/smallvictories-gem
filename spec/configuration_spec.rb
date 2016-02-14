@@ -8,6 +8,10 @@ describe SmallVictories do
       expect(configuration.source).to eq '_sv'
     end
 
+    it 'defaults to deploy directory' do
+      expect(configuration.deploy).to eq ''
+    end
+
     it 'defaults to destination directory' do
       expect(configuration.destination).to eq ''
     end
@@ -72,6 +76,10 @@ describe SmallVictories do
 
     it 'reads the source folder' do
       expect(configuration.source).to eq 'my-source-folder'
+    end
+
+    it 'reads to deploy directory' do
+      expect(configuration.deploy).to eq '../my-deploy-folder'
     end
 
     it 'reads the destination folder' do

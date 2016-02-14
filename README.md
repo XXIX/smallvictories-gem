@@ -67,11 +67,23 @@ folder.
  
 Command: `sv compile`
 
+### Deploy
+
+Minify and copy files to deploy folder.
+ 
+Command: `sv deploy`
+
 ### Inline
 
 Compile files and then inline CSS in your HTML files.
  
 Command: `sv inline`
+
+### Minify
+
+Minify CSS and JS files for production.
+ 
+Command: `sv minify`
 
 ### Watch
 
