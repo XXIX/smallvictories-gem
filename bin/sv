@@ -89,6 +89,8 @@ when 'deploy'
   deploy ARGV[1]
 when 'inline'
   inline
+when 'minify'
+  minify
 when 'watch'
   watch
 else

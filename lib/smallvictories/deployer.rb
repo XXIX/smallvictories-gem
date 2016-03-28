@@ -12,7 +12,7 @@ module SmallVictories
 
     def copy folder=nil
       folder ||= config.deploy
-      deploy_path = File.join(ROOT, folder)
+      deploy_path = File.join(ROOT, "#{folder}/")
       begin
         Find.find(config.full_destination_path) do |source|
           Find.prune if self.ignore_files.include?(File.basename(source))
@@ -29,7 +29,7 @@ module SmallVictories
     end
 
     def ignore_files
-      ['.git', config.source, CONFIG_FILE, GUARD_FILE]
+      ['.DS_Store', '.git', '.gitignore', config.source, CONFIG_FILE, GUARD_FILE]
     end
   end
 end

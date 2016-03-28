@@ -1,1 +1,0 @@
-(function(){alert("hi")}).call(this),console.log("hi");

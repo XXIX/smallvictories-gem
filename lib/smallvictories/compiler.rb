@@ -156,6 +156,7 @@ module SmallVictories
     end
 
     def sprite
+      SmallVictories.logger.debug "Spriting"
       sprite_directory = File.join(config.full_source_path, config.source_sprite)
       return unless Dir.exists?(sprite_directory)
       css = "@import 'rails-sass-images';\n"

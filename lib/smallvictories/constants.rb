@@ -1,6 +1,6 @@
 module SmallVictories
   CONFIG_FILE = '_sv_config.yml'
-  GUARD_FILE = '.sv_guardfile'
+  GUARD_FILE = 'Guardfile'
   DEFAULT_SOURCE = '_sv'
   DEFAULT_DEPLOY = ''
   DEFAULT_DESTINATION = ''

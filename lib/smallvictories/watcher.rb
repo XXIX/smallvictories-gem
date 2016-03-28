@@ -40,14 +40,18 @@ module SmallVictories
       SmallVictories.logger.debug "👋"
       SmallVictories.logger.debug "👀"
 
-      pid = Process.fork { system('guard -i --guardfile .sv_guardfile') }
-      Process.detach(pid)
+      if File.exists?('Guardfile')
+        pid = Process.fork { system('guard -i') }
+        Process.detach(pid)
+      end
 
       listener = build_listener
       listener.start
 
       trap("INT") do
-        Process.kill "TERM", pid
+        if File.exists?('Guardfile')
+          Process.kill "TERM", pid
+        end
         listener.stop
         puts "✋  Halting auto-regeneration."
         exit 0
