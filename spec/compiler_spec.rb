@@ -128,7 +128,7 @@ describe SmallVictories do
 
     it 'inlines the compiled files' do
       compiler.inline_html
-      expect(File.open(destination_html).read).to include "<p style=\"font-size: 12px\">Hello Email Friend</p>"
+      expect(File.open(destination_html).read).to include "<p style=\"font-size: 12px;\">Hello Email Friend</p>"
     end
   end
 

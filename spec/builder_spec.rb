@@ -8,7 +8,6 @@ describe SmallVictories do
     it 'sets up default files' do
       builder.setup 'spec/fixtures/new'
       files.each do |file|
-        puts file
         expect(File.exists?(file)).to eq true
       end
     end

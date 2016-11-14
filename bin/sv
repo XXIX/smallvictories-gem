@@ -12,6 +12,7 @@ def help
     deploy                          Minify and copy files to deploy folder
     inline                          Inline CSS in your HTML files
     minify                          Minify files for production
+    server                          Run Small Victories local HTML development server
     watch                           Watch for changes and compile files
     help                            Prints this help document
     version                         Prints the small victories gem version
@@ -68,6 +69,12 @@ def minify
   compiler.minify_js
 end
 
+def server
+  config = SmallVictories::Configuration.new
+  server = SmallVictories::Server.new(config: config)
+  server.run
+end
+
 def watch
   compile
   config = SmallVictories::Configuration.new
@@ -91,6 +98,8 @@ when 'inline'
   inline
 when 'minify'
   minify
+when 'server'
+  server
 when 'watch'
   watch
 else
