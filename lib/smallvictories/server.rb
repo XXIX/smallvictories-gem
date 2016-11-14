@@ -115,37 +115,40 @@ module SmallVictories
       loop do
         @socket = @server.accept
         request_line = socket.gets
-        socket.close if request_line == nil
 
         STDERR.puts request_line
 
-        path = requested_file(request_line)
-        path = File.join(path, 'index.html') if File.directory?(path)
+        begin
+          path = requested_file(request_line)
+          path = File.join(path, 'index.html') if File.directory?(path)
 
-        if path == File.join(WEB_ROOT, '_sv_custom.css')
-          render_stylesheet
-        elsif File.exist?(path) && !File.directory?(path)
-          File.open(path, "rb") do |file|
-            if File.extname(path) == '.html'
-              # parse liquid
-              template = Liquid::Template.parse(file.read, error_mode: :warn)
-              render_string(template.render(SiteFile.files_hash))
-            else
-              render_file(file)
+          if path == File.join(WEB_ROOT, '_sv_custom.css')
+            render_stylesheet
+          elsif File.exist?(path) && !File.directory?(path)
+            File.open(path, "rb") do |file|
+              if File.extname(path) == '.html'
+                # parse liquid
+                template = Liquid::Template.parse(file.read, error_mode: :warn)
+                render_string(template.render(SiteFile.files_hash))
+              else
+                render_file(file)
+              end
             end
+          else
+            message = "File not found\n"
+
+            # respond with a 404 error code to indicate the file does not exist
+            socket.print "HTTP/1.1 404 Not Found\r\n" +
+                        "Content-Type: text/plain\r\n" +
+                        "Content-Length: #{message.size}\r\n" +
+                        "Connection: close\r\n"
+
+            socket.print "\r\n"
+
+            socket.print message
           end
-        else
-          message = "File not found\n"
-
-          # respond with a 404 error code to indicate the file does not exist
-          socket.print "HTTP/1.1 404 Not Found\r\n" +
-                      "Content-Type: text/plain\r\n" +
-                      "Content-Length: #{message.size}\r\n" +
-                      "Connection: close\r\n"
-
+        rescue => e
           socket.print "\r\n"
-
-          socket.print message
         end
 
         socket.close
