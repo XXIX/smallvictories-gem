@@ -20,10 +20,6 @@ includes folder.
 You don't have to use a layout file if you don't want to, the files will still
 be copied to the destination folder.
  
-[Sprite Factory](https://github.com/jakesgordon/sprite-factory) looks for image
-files in the sprite folder and generates a single sprite png and sprite
-stylesheet.
- 
 [Guard LiveReload](https://github.com/guard/guard-livereload) is used to notify
 the browser to automatically reload. It needs to be used with
 the [LiveReload Safari/Chrome/Firefox extension](http://livereload.com/extensions#installing-sections).
@@ -32,14 +28,6 @@ the [LiveReload Safari/Chrome/Firefox extension](http://livereload.com/extension
 
 ```
 gem install smallvictories
-```
-
-To use the [Sprite Factory](https://github.com/jakesgordon/sprite-factory) to
-generate Sprite CSS you will need to install image magick which you can do with
-homebrew:
- 
-```
-brew install imagemagick
 ```
 
 ## Commands
@@ -103,15 +91,12 @@ Dropbox
       └── _sv
       │   ├── _includes
       │   │ └── _head.liquid
-      │   ├── _sprite
       │   ├── _layout.liquid
       │   ├── applscation.css
       │   ├── application.js
       │   ├── index.liquid
-      │   └── sprite.css
       ├── _sv_custom.css
       ├── _sv_custom.js
-      ├── _sv_sprite.png
       └── index.html
 ```
 
@@ -166,7 +151,6 @@ You can set the following options:
 + `compile_css`: Should Small Victories compile Sass/css? Default is true.
 + `compile_js`: Should Small Victories compile CoffeeScript/JavaScript? Default is true.
 + `compile_html`: Should Small Victories compile HTML? Default is true.
-+ `compile_sprite`: Should Small Victories compile Sprite? Default is true.
 
 ### Default Configuration
 

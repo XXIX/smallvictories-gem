@@ -5,7 +5,6 @@ require 'mime-types'
 require 'sass'
 require 'sassc'
 
-
 module SmallVictories
   class Server
     attr_accessor :config, :socket, :server

@@ -4,9 +4,6 @@ describe SmallVictories do
   let(:destination_css) { './fixtures/destination/_sv_custom.css' }
   let(:destination_js) { './fixtures/destination/_sv_custom.js' }
   let(:destination_html) { './fixtures/destination/index.html' }
-  let(:destination_sprite_file) { './fixtures/destination/_sv_sprite.png' }
-  let(:source_sprite_file) { './fixtures/source/_sv_sprite.png' }
-  let(:destination_sprite_style) { './fixtures/source/sprite.scss' }
   let(:compiler) { SmallVictories::Compiler.new(config: SmallVictories::Configuration.new) }
 
   before do
@@ -150,24 +147,6 @@ describe SmallVictories do
     it 'shows the error in html' do
       compiler.compile_html
       expect(File.open(destination_html).read).to include "<html>\n<h1>Index</h1>\nLiquid error: No such template 'snippet'\n\n</html>"
-    end
-
-    it 'ignores the sprite' do
-      compiler.compile_sprite
-      expect(File.exists?(destination_sprite_style)).to eq false
-    end
-  end
-
-  describe '#compile_sprite' do
-    it 'compiles the image files into a sprite' do
-      compiler.compile_sprite
-      expect(File.exists?(destination_sprite_file)).to eq true
-      expect(File.exists?(source_sprite_file)).to eq true
-    end
-
-    it 'compiles the css for the image sprite' do
-      compiler.compile_sprite
-      expect(File.exists?(destination_sprite_style)).to eq true
     end
   end
 end

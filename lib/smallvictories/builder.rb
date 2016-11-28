@@ -18,7 +18,6 @@ module SmallVictories
       setup_stylesheet
       setup_javascript
       setup_html
-      setup_sprite
     end
 
     def folder_path
@@ -81,11 +80,6 @@ module SmallVictories
       create_src_file('head.liquid', File.join(folder_source_path, config.includes, '/_head.liquid'))
       create_src_file('layout.liquid', File.join(folder_source_path, config.layout))
       create_src_file('index.liquid', File.join(folder_source_path, 'index.liquid'))
-    end
-
-    def setup_sprite
-      setup_directory File.join(folder_source_path, config.source_sprite)
-      create_src_file('empty.png', File.join(folder_source_path, config.source_sprite, 'empty.png'))
     end
   end
 end

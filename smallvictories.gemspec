@@ -31,9 +31,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'closure-compiler', '~> 1.1'
   spec.add_runtime_dependency 'premailer', '~> 1.8'
   spec.add_runtime_dependency 'nokogiri', '~> 1.4'
-  spec.add_runtime_dependency 'sprite-factory', '~> 1.7'
-  spec.add_runtime_dependency 'rmagick', '~> 2.15'
-  spec.add_runtime_dependency 'rails-sass-images', '~> 1.0'
   spec.add_runtime_dependency 'mime-types'
 
   spec.add_development_dependency "bundler", "~> 1.7"

@@ -28,8 +28,6 @@ module SmallVictories
             compiler.compile_js
           when '.liquid', '.html'
             compiler.compile_html
-          when '.png', '.jpg', '.jpeg', '.gif'
-            compiler.compile_sprite unless paths.find { |path| path == File.join(compiler.config.full_source_path, compiler.config.destination_sprite_file) }
           else
           end
         end

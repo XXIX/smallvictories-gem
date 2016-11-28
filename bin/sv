@@ -35,7 +35,6 @@ end
 def compile
   config = SmallVictories::Configuration.new
   compiler = SmallVictories::Compiler.new(config: config)
-  compiler.compile_sprite
   compiler.compile_css
   compiler.compile_js
   compiler.compile_html
