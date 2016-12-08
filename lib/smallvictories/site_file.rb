@@ -38,7 +38,11 @@ module SmallVictories
     end
 
     def file_type
-      MIME::Types.type_for('css')
+      if ext = File.extname(path).split(".").last
+        MIME::Types.type_for(ext).first.to_s
+      else
+        'text/html'
+      end
     end
 
     def asset?
